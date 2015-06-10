@@ -1,0 +1,50 @@
+﻿@model conestogacinema_project.Models.room
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>room</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.room_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.room_seats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_seats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.room_projector)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_projector)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.room_types.type_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.room_types.type_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.room_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,124 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width of input elements, originally 100% width */
+input,
+select,
+textarea {
+    max-width: 350px;
+}
+
+.navbar-brand {
+    margin-top:-7px;
+}
+
+#logoutForm {
+    display: inline-block;
+}
+
+.poster {
+  position: relative;
+  width: 100%;
+  height: 370px;
+  overflow: hidden;
+}
+.poster img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+.thumbnail img.portrait {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+    margin: 0.5em 0 0.5em;
+}
+
+dt {
+    color: #fff;
+}
+
+.control-label {
+    color: #fff;
+}
+
+h4 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+h4 a:hover {
+    color: #888888;
+    text-decoration: none;
+}
+
+.checkbox-white {
+    color: #e5e5e5;
+    margin-left: -20px;
+}
+
+#cc-logo:hover {
+    opacity: 0.7;
+}
+
+
+
+.thumbnail.right-caption > img {
+    float: left;
+    margin-right: 20px;
+    margin-left: -15px;
+    max-width: 130px;
+}
+
+.thumbnail.right-caption {
+    float: left;
+}
+
+.event-cal {
+    float:right;
+}
+
+.event-cal-day {
+    line-height:1;
+    font-size:2.5em;
+}
+
+.event-cal-date {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    background-image: none;
+    border: 2px solid transparent;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 18px;
+    line-height: 1.2;
+    border-radius: 8px;
+    font-family: 'Montserrat';
+    color: #ffffff;
+    border-color: #ffffff;
+    margin-top:9px;
+}
+
+.event-cal-month {
+    text-transform: uppercase;
+}

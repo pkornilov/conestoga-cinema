@@ -1,0 +1,39 @@
+﻿@model conestogacinema_project.Models.showtime
+
+@{
+    ViewBag.Title = "Showtime";
+
+    DateTime year = Convert.ToDateTime(Html.DisplayFor(model => model.movy.movie_release_date).ToString());
+    DateTime showtime_date = Convert.ToDateTime(Html.DisplayFor(model => model.showtime_date).ToString());
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        <h4>@ViewBag.Title</h4>
+    </div>
+</div>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Date</dt>
+        <dd>@showtime_date.ToString("dddd, MMMM d, yyyy")</dd>
+
+        <dt>Time</dt>
+        <dd>@showtime_date.ToString("h:mm tt")</dd>
+
+        <dt>Movie</dt>
+        <dd>@Html.DisplayFor(model => model.movy.movie_title) (@year.ToString("yyyy"))</dd>
+
+        <dt>Room</dt>
+        <dd>@Html.DisplayFor(model => model.room.room_title) (@Html.DisplayFor(model => model.room.room_seats) seats)</dd>
+
+        <dt>Hosted by</dt>
+        <dd>@Html.DisplayFor(model => model.AspNetUser.FirstName) @Html.DisplayFor(model => model.AspNetUser.LastName)</dd>
+    </dl>
+
+    <div class="form-inline">
+        <a class="btn btn-primary btn-outline" href="@Url.Action("Edit", "Showtimes", new { id = Model.showtime_id })">Edit</a>
+        <a class="btn btn-danger btn-outline" href="@Url.Action("Delete", "Showtimes", new { id = Model.showtime_id })">Delete</a>
+    </div>
+
+</div>

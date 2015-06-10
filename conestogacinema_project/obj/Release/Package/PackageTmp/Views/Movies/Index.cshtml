@@ -1,0 +1,37 @@
+﻿@model IEnumerable<conestogacinema_project.Models.movy>
+
+@{
+    ViewBag.Title = "Movies";
+}
+
+@*<div class="col-lg-12">
+    <div class="row">*@
+        <h4 class="pull-right"><a class="btn btn-primary btn-lg btn-outline" href="@Url.Action("Create", "Movies")">Add New</a></h4>
+        <h3 class="text-uppercase">@ViewBag.Title</h3>
+<br />
+    @*</div>
+</div>*@
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var imdbString = "http://www.imdb.com/title/" + Html.DisplayFor(modelItem => item.imdb_id);
+        var imageFile = Html.DisplayFor(modelItem => item.imdb_id) + ".jpg";
+
+        <div class="col-sm-4 col-md-3 col-lg-3">
+            <div class="thumbnail">
+                <a href="@Url.Action("Details", "Movies", new { id = item.movie_id })">
+                    <img src="~/Content/images/movies/@imageFile" alt="@Html.DisplayFor(modelItem => item.movie_title)">
+                </a>
+                <div class="caption">
+                    <h4>@Html.DisplayFor(modelItem => item.movie_title)</h4>
+                    <p>@Html.DisplayFor(modelItem => item.genre.genre_name)</p>
+                    <p>@Html.DisplayFor(modelItem => item.movie_runtime) min</p>
+                    <p>@Html.DisplayFor(modelItem => item.movie_release_date)</p>
+                    @*<p><a href="@imdbString" target="_blank">IMDb</a></p>*@
+                    <p>@Html.ActionLink("Delete", "Delete", new { id = item.movie_id })</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

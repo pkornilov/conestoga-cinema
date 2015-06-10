@@ -1,0 +1,345 @@
+﻿@model conestogacinema_project.Models.movy
+@using IMDb_Scraper;
+
+@{
+    ViewBag.Title = "Add Movie";
+    string imdbQuery = Request.QueryString["imdb"];
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        <h4>Add a New Movie</h4>
+    </div>
+</div>
+
+<div class="form-horizontal">
+    <form onsubmit="javascript: imdbSearch(document.getElementById('imdbId').value); return false;">
+        <div class="form-group">
+            <label class="control-label col-md-2">Movie Title or IMDb ID</label>
+            <div class="col-md-10">
+                <input type="text" id="imdbId" class="form-control" />
+                <p class="text-danger" id="error"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default btn-outline" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@if (TempData["errorMessage"] != null)
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4">
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> @TempData["errorMessage"]
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!imdbQuery.IsEmpty())
+{
+    // Initiate IMDb movie object
+    IMDb movie;
+    string imdbString = "";
+
+    const int MAX_CREW = 3;
+    const int MAX_CAST = 5;
+
+    // Correct load data indicator
+    bool imdbLoaded = true;
+
+    // Fields for a movie
+    string title = "";
+    string description = "";
+    string runtime = "";
+    DateTime releaseDate = DateTime.Now;
+    string imdbId = "";
+    string posterUrl = "";
+
+
+    // Arrays for genres, cast & crew
+    String[] genres = new String[0];
+    String genre = "";
+
+    String[] directors = new String[0];
+    int directorsLength = 0;
+
+    String[] writers = new String[0];
+    int writersLength = 0;
+
+    String[] producers = new String[0];
+    int producersLength = 0;
+
+    String[] actors = new String[0];
+    int actorsLength = 0;
+
+
+    try
+    {
+        // Assign values from IMDb request to the object
+        movie = new IMDb(imdbQuery, true);
+        imdbString = "http://www.imdb.com/title/" + movie.Id;
+
+        // Assign titles, description, runtime, release date, IMDb ID and poster URL
+        title = movie.Title;
+
+        description = movie.Plot;
+        if (description == string.Empty)
+        {
+            description = "None";
+        }
+
+        runtime = movie.Runtime;
+        if (runtime == string.Empty)
+        {
+            runtime = "0";
+        }
+
+        releaseDate = Convert.ToDateTime(movie.ReleaseDate.ToString());
+
+        imdbId = movie.Id;
+
+        if (movie.PosterLarge != string.Empty)
+        {
+            posterUrl = movie.PosterLarge;
+        }
+        else
+        {
+            posterUrl = string.Empty;
+        }
+
+
+        // Assign genres, cast & crew
+        genres = (String[])movie.Genres.ToArray(typeof(string));
+        genre = "";
+        for (int i = 0; i < genres.Length; i++)
+        {
+            genre += genres[i];
+
+            if (i != genres.Length - 1)
+            {
+                genre += ", ";
+            }
+        }
+
+        directors = (String[])movie.Directors.ToArray(typeof(string));
+        directorsLength = 0;
+
+        if (directors.Length >= MAX_CREW)
+        {
+            directorsLength = MAX_CREW;
+        }
+        else
+        {
+            directorsLength = directors.Length;
+        }
+
+        writers = (String[])movie.Writers.ToArray(typeof(string));
+        writersLength = 0;
+
+        if (writers.Length >= MAX_CREW)
+        {
+            writersLength = MAX_CREW;
+        }
+        else
+        {
+            writersLength = writers.Length;
+        }
+
+        producers = (String[])movie.Producers.ToArray(typeof(string));
+        producersLength = 0;
+
+        if (producers.Length >= MAX_CREW)
+        {
+            producersLength = MAX_CREW;
+        }
+        else
+        {
+            producersLength = producers.Length;
+        }
+
+        actors = (String[])movie.Cast.ToArray(typeof(string));
+        actorsLength = 0;
+
+        if (actors.Length >= MAX_CAST)
+        {
+            actorsLength = MAX_CAST;
+        }
+        else
+        {
+            actorsLength = actors.Length;
+        }
+
+    }
+    catch
+    {
+        imdbLoaded = false;
+    }
+
+
+    // If all data loaded correctly from IMDb
+    if (imdbLoaded)
+    {
+        <div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+                <div class="row">
+                    <h3 class="text">@System.Web.HttpUtility.HtmlDecode(title) <small>(@releaseDate.ToString("yyyy"))</small></h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                    <div class="thumbnail">
+                        @if (posterUrl != string.Empty)
+                        {
+                            <img src="@posterUrl" alt="@title Poster">
+                        }
+                        else
+                        {
+                            <img src="~/Content/images/no-poster.png" alt="No Poster">
+                        }
+                    </div>
+
+                    <div class="hidden">
+                        <p id="titleRaw">@System.Web.HttpUtility.HtmlDecode(title)</p>
+                        <p id="descriptionRaw">@System.Web.HttpUtility.HtmlDecode(description)</p>
+                        <p id="runtimeRaw">@runtime</p>
+                        <p id="releaseDateRaw">@releaseDate</p>
+                        <p id="genreRaw">@genres[0]</p>
+                        <p id="imdbIdRaw">@imdbId</p>
+                        <p id="imdbPosterRaw">@posterUrl</p>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="hidden">
+                            @Html.AntiForgeryToken()
+
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.movie_title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.movie_title, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.movie_description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.movie_description, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.movie_runtime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.movie_runtime, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.movie_release_date, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.movie_release_date, "", new { @class = "text-danger" })
+
+                            @Html.DropDownList("genre_id", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.genre_id, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.imdb_id, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.imdb_id, "", new { @class = "text-danger" })
+
+                            @Html.EditorFor(model => model.imdb_poster, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.imdb_poster, "", new { @class = "text-danger" })
+                            <br />
+                        </div>
+
+                        <script>fillForm();</script>
+                        <button type="submit" class="btn btn-success btn-outline btn-group-justified btn-lg">Add Movie</button>
+                    }
+                </div>
+
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-7">
+
+                    @if (description != "None")
+                    {
+                        <h4 class="text-uppercase">Description</h4>
+                        <p id="description">@System.Web.HttpUtility.HtmlDecode(description)</p>
+                    }
+
+                    <h4 class="text-uppercase">Information</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Genre</dt>
+                        <dd id="genre">@genre</dd>
+
+                        <dt>Release Date</dt>
+                        <dd id="releaseDate">@releaseDate.ToString("d MMMM yyyy")</dd>
+
+                        @if (runtime != "0")
+                        {
+                            <dt>Run Time</dt>
+                            <dd id="runtime">@runtime min</dd>
+                        }
+                    </dl>
+                    <h4 class="text-uppercase">Cast & Crew</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Director</dt>
+                        <dd id="director">
+                            @for (int i = 0; i < directorsLength; i++)
+                            {
+                                @System.Web.HttpUtility.HtmlDecode(directors[i])
+
+                                if (i != directorsLength - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                        </dd>
+
+                        <dt>Screenwriter</dt>
+                        <dd id="screenwriter">
+                            @for (int i = 0; i < writersLength; i++)
+                            {
+                                @System.Web.HttpUtility.HtmlDecode(writers[i])
+
+                                if (i != writersLength - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                        </dd>
+
+                        <dt>Producer</dt>
+                        <dd id="producer">
+                            @for (int i = 0; i < producersLength; i++)
+                            {
+                                @System.Web.HttpUtility.HtmlDecode(producers[i])
+
+                                if (i != producersLength - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                        </dd>
+
+                        <dt>Actors</dt>
+                        <dd id="actors">
+                            @for (int i = 0; i < actorsLength; i++)
+                            {
+                                @System.Web.HttpUtility.HtmlDecode(actors[i])
+
+                                if (i != actorsLength - 1)
+                                {
+                                    <br />
+                                }
+                            }
+                            <br /><a href="@imdbString" target="_blank">More on IMDb...</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

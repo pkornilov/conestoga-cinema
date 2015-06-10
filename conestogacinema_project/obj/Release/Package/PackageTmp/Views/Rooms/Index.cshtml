@@ -1,0 +1,51 @@
+﻿@model IEnumerable<conestogacinema_project.Models.room>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.room_title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.room_seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.room_projector)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.room_types.type_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.room_title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.room_seats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.room_projector)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.room_types.type_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.room_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.room_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.room_id })
+        </td>
+    </tr>
+}
+
+</table>

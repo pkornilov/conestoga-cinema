@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title &ndash; Conestoga Cinema</title>
+    <link rel="icon" href="~/Content/images/favicon.ico">
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/css/bootstrap.dark.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/custom.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Content/js/main.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" rel="home" href="@Url.Action("Index", "Home")" title="Conestoga Cinema">
+                    <img id="cc-logo" src="~/Content/images/cc_logo_w128.png">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right text-uppercase">
+                    <li>@Html.ActionLink("Showtimes", "Index", "Showtimes")</li>
+                    <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+                    <li>@Html.ActionLink("Rooms", "Index", "Rooms")</li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+        <footer>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <hr />
+                    <ul class="list-inline">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Showtimes", "Index", "Showtimes")</li>
+                        <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+                        <li>@Html.ActionLink("Rooms", "Index", "Rooms")</li>
+                    </ul>
+                    <p>Coded by <a href="https://dribbble.com/philfriday" target="_blank">Philippe Kornilov</a>.</p>
+                    <p>Application &copy; Conestoga Cinema, @DateTime.Now.Year. All rights reserved.</p>
+                    <p>All movies content &copy; <a href="http://www.imdb.com/" target="_blank">IMDb.com, Inc.</a>, 1990-@DateTime.Now.Year.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<conestogacinema_project.Models.room>
+
+@{
+    ViewBag.Title = "Rooms";
+}
+
+<div class="col-lg-12 title">
+    <div class="row">
+        @if (User.IsInRole("Administrator"))
+        {
+            <h4 class="pull-right"><a class="btn btn-primary btn-lg btn-outline" href="@Url.Action("Create", "Rooms")">Add New</a></h4>
+        }
+        <h3 class="text-uppercase">@ViewBag.Title</h3>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var imageFile = Html.DisplayFor(modelItem => item.room_title).ToString().ToLower() + ".jpg";
+
+        <div class="col-sm-4 col-md-3 col-lg-3">
+            <div class="thumbnail">
+                <img src="~/Content/images/rooms/@imageFile" alt="@Html.DisplayFor(modelItem => item.room_title)">
+                <div class="caption">
+                    <h4>@Html.DisplayFor(modelItem => item.room_title)</h4>
+                    <p>@Html.DisplayFor(modelItem => item.room_types.type_name)</p>
+                    <p>@Html.DisplayFor(modelItem => item.room_seats) seats</p>
+                    <p>@Html.DisplayFor(modelItem => item.room_projector)</p>
+                    <h4>
+                        <a class="btn btn-primary btn-outline btn-sm" href="@Url.Action("Create", "Showtimes", new { room = item.room_id })">Book</a>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a class="btn btn-default btn-outline btn-sm" href="@Url.Action("Details", "Rooms", new { id = item.room_id })">Details</a>
+                        }
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+</div>

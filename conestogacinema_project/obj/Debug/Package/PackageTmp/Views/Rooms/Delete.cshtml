@@ -1,0 +1,36 @@
+﻿@model conestogacinema_project.Models.room
+
+@{
+    ViewBag.Title = "Delete Room " + Html.DisplayFor(model => model.room_title);
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        <h4>Are you sure to delete room @Html.DisplayFor(model => model.room_title)?</h4>
+    </div>
+</div>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Room Title</dt>
+        <dd>@Html.DisplayFor(model => model.room_title)</dd>
+
+        <dt>Number of Seats</dt>
+        <dd>@Html.DisplayFor(model => model.room_seats)</dd>
+
+        <dt>Screen Projector</dt>
+        <dd>@Html.DisplayFor(model => model.room_projector)</dd>
+
+        <dt>Room Type</dt>
+        <dd>@Html.DisplayFor(model => model.room_types.type_name)</dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger btn-outline" />
+            <a href="javascript:history.go(-1)" class="btn btn-default btn-outline">Cancel</a>
+        </div>
+    }
+</div>

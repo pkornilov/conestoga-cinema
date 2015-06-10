@@ -1,0 +1,55 @@
+﻿@model conestogacinema_project.Models.movy
+
+@{
+    DateTime releaseDate = Convert.ToDateTime(Html.DisplayFor(model => model.movie_release_date).ToString());
+
+    ViewBag.Title = "Delete " + Html.DisplayFor(model => model.movie_title) + " (" + releaseDate.ToString("yyyy") + ")";
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        <h4>Are you sure to delete @Html.DisplayFor(model => model.movie_title) (@releaseDate.ToString("yyyy"))?</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+        <dl class="dl-horizontal">
+            <dt>ID</dt>
+            <dd>@Html.DisplayFor(model => model.movie_id)</dd>
+
+            <dt>Title</dt>
+            <dd>@Html.DisplayFor(model => model.movie_title)</dd>
+
+            <dt>Description</dt>
+            <dd>@Html.DisplayFor(model => model.movie_description)</dd>
+
+            <dt>Run Time</dt>
+            <dd>@Html.DisplayFor(model => model.movie_runtime) min</dd>
+
+            <dt>Release Date</dt>
+            <dd>@releaseDate.ToString("d MMMM yyyy")</dd>
+
+            <dt>Genre</dt>
+            <dd>@Html.DisplayFor(model => model.genre.genre_name)</dd>
+
+            <dt>IMDb ID</dt>
+            <dd>@Html.DisplayFor(model => model.imdb_id)</dd>
+
+            <dt>Poster URL</dt>
+            <dd>@Html.DisplayFor(model => model.imdb_poster)</dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger btn-outline" />
+                <a href="javascript:history.go(-1)" class="btn btn-default btn-outline">Cancel</a>
+            </div>
+        }
+    </div>
+</div>
+
+

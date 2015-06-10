@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Welcome";
+}
+
+<br />
+<div class="jumbotron">
+    <h1 class="text-uppercase"><img class="img-responsive" src="~/Content/images/cc_logo.png" alt="Conestoga Cinema" /></h1>
+    <h3>Enjoy movies on the big screen. Right at the college.</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3 class="text-uppercase" style="padding-bottom:5px">Room Booking</h3>
+        <p style="padding-bottom:15px">
+            With Conestoga Cinema, college students can book rooms equipped with screen projectors.
+            There is a list of Conestoga College rooms that are available for booking.
+        </p>
+        <p><a class="btn btn-primary btn-outline" href="@Url.Action("Index", "Rooms")">List of Rooms</a></p>
+    </div>
+
+    <div class="col-md-4">
+        <h3 class="text-uppercase" style="padding-bottom:5px">IMDb Movies</h3>
+        <p style="padding-bottom:15px">
+            We maintain a library of movies that students can watch with their fellows. It keeps getting
+            bigger since users can add any movie they want to watch from IMDb using our app. 
+        </p>
+        <p><a class="btn btn-primary btn-outline" href="@Url.Action("Index", "Movies")">Movie Library</a></p>
+    </div>
+
+    <div class="col-md-4">
+        <h3 class="text-uppercase" style="padding-bottom:5px">Showtimes</h3>
+        <p style="padding-bottom:15px">
+            After a hard day of studying, there is a perfect chance for students to have a rest at watching
+            a good movie without leaving the college. Students can host their own showtimes, and it's flexible.
+        </p>
+        <p><a class="btn btn-primary btn-outline" href="@Url.Action("Index", "Showtimes")">Upcoming Showtimes</a></p>
+    </div>
+</div>

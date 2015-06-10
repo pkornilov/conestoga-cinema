@@ -1,0 +1,235 @@
+﻿@model conestogacinema_project.Models.movy
+@using IMDb_Scraper;
+@using System.Collections;
+@using Microsoft.AspNet.Identity;
+
+@{
+    var posterFile = Html.DisplayFor(model => model.imdb_id) + ".jpg";
+    var imdbString = "http://www.imdb.com/title/" + Html.DisplayFor(model => model.imdb_id);
+    DateTime releaseDate = Convert.ToDateTime(Html.DisplayFor(model => model.movie_release_date).ToString());
+
+    IMDb movie;
+
+    const int MAX_CREW = 3;
+    const int MAX_CAST = 5;
+
+
+    bool imdbLoaded = true;
+
+    String[] genres = new String[0];
+    String genre = "";
+
+    String[] directors = new String[0];
+    int directorsLength = 0;
+
+    String[] writers = new String[0];
+    int writersLength = 0;
+
+    String[] producers = new String[0];
+    int producersLength = 0;
+
+    String[] actors = new String[0];
+    int actorsLength = 0;
+
+    String posterUrl = "";
+
+    try
+    {
+        movie = new IMDb(Html.DisplayFor(model => model.imdb_id).ToString(), true);
+
+
+        posterUrl = Html.DisplayFor(model => model.imdb_poster).ToString();
+
+
+        genres = (String[])movie.Genres.ToArray(typeof(string));
+        genre = "";
+        for (int i = 0; i < genres.Length; i++)
+        {
+            genre += genres[i];
+
+            if (i != genres.Length - 1)
+            {
+                genre += ", ";
+            }
+        }
+
+
+        directors = (String[])movie.Directors.ToArray(typeof(string));
+        directorsLength = 0;
+
+        if (directors.Length >= MAX_CREW)
+        {
+            directorsLength = MAX_CREW;
+        }
+        else
+        {
+            directorsLength = directors.Length;
+        }
+
+
+        writers = (String[])movie.Writers.ToArray(typeof(string));
+        writersLength = 0;
+
+        if (writers.Length >= MAX_CREW)
+        {
+            writersLength = MAX_CREW;
+        }
+        else
+        {
+            writersLength = writers.Length;
+        }
+
+
+        producers = (String[])movie.Producers.ToArray(typeof(string));
+        producersLength = 0;
+
+        if (producers.Length >= MAX_CREW)
+        {
+            producersLength = MAX_CREW;
+        }
+        else
+        {
+            producersLength = producers.Length;
+        }
+
+
+        actors = (String[])movie.Cast.ToArray(typeof(string));
+        actorsLength = 0;
+
+        if (actors.Length >= MAX_CAST)
+        {
+            actorsLength = MAX_CAST;
+        }
+        else
+        {
+            actorsLength = actors.Length;
+        }
+
+    }
+    catch
+    {
+        imdbLoaded = false;
+    }
+
+    ViewBag.Title = Html.DisplayFor(model => model.movie_title) + " (" + releaseDate.ToString("yyyy") + ")";
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        @if (User.IsInRole("Administrator"))
+        {
+            <h3 class="pull-right">
+                <a class="btn btn-primary btn-outline btn-sm" href="@Url.Action("Edit", "Movies", new { id = Model.movie_id })">Edit</a>
+                <a class="btn btn-danger btn-outline btn-sm" href="@Url.Action("Delete", "Movies", new { id = Model.movie_id })">Delete</a>
+            </h3>
+        }
+        <h3 class="text">@Html.DisplayFor(model => model.movie_title) <small>(@releaseDate.ToString("yyyy"))</small></h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <div class="thumbnail">
+            @if (posterUrl != string.Empty)
+            {
+                <img class="portrait" src="@posterUrl" alt="@Html.DisplayFor(model => model.movie_title) Poster">
+            }
+            else
+            {
+                <img class="portrait" src="~/Content/images/no-poster.png" alt="@Html.DisplayFor(model => model.movie_title) Poster">
+            }
+        </div>
+        <h4><a class="btn btn-warning btn-outline btn-group-justified btn-lg" href="@imdbString" target="_blank">See on IMDb</a></h4>
+        <h4><a class="btn btn-primary btn-outline btn-group-justified btn-lg" href="@Url.Action("Create", "Showtimes", new { movie = Model.movie_id })">Watch</a></h4>
+    </div>
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-7">
+        <h4 class="text-uppercase">Description</h4>
+        <p>@Html.DisplayFor(model => model.movie_description)</p>
+    </div>
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-7">
+        <h4 class="text-uppercase">Information</h4>
+        <dl class="dl-horizontal">
+            <dt>Genre</dt>
+            <dd>
+                @if (imdbLoaded)
+                {
+                    @genre
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.genre.genre_name)
+                }
+            </dd>
+
+            <dt>Release Date</dt>
+            <dd>@releaseDate.ToString("d MMMM yyyy")</dd>
+
+            <dt>Run Time</dt>
+            <dd>@Html.DisplayFor(model => model.movie_runtime) min</dd>
+        </dl>
+
+        @if (imdbLoaded)
+        {
+            <h4 class="text-uppercase">Cast & Crew</h4>
+            <dl class="dl-horizontal">
+                <dt>Director</dt>
+                <dd>
+                    @for (int i = 0; i < directorsLength; i++)
+                    {
+                        @System.Web.HttpUtility.HtmlDecode(directors[i])
+
+                        if (i != directorsLength - 1)
+                        {
+                            <br />
+                        }
+                    }
+                </dd>
+
+                <dt>Screenwriter</dt>
+                <dd>
+                    @for (int i = 0; i < writersLength; i++)
+                    {
+                        @System.Web.HttpUtility.HtmlDecode(writers[i])
+
+                        if (i != writersLength - 1)
+                        {
+                            <br />
+                        }
+                    }
+                </dd>
+
+                <dt>Producer</dt>
+                <dd>
+                    @for (int i = 0; i < producersLength; i++)
+                    {
+                        @System.Web.HttpUtility.HtmlDecode(producers[i])
+
+                        if (i != producersLength - 1)
+                        {
+                            <br />
+                        }
+                    }
+                </dd>
+
+                <dt>Actors</dt>
+                <dd>
+                    @for (int i = 0; i < actorsLength; i++)
+                    {
+                        @System.Web.HttpUtility.HtmlDecode(actors[i])
+
+                        if (i != actorsLength - 1)
+                        {
+                            <br />
+                        }
+                    }
+                    <br /><a href="@imdbString" target="_blank">More on IMDb...</a>
+                </dd>
+            </dl>
+        }
+        else
+        {
+            <a href="@imdbString" target="_blank">More on IMDb...</a>
+        }
+    </div>
+</div>

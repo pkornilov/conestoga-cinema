@@ -1,0 +1,66 @@
+﻿@model conestogacinema_project.Models.movy
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>movy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.movie_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.movie_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.movie_description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.movie_description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.movie_runtime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.movie_runtime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.movie_release_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.movie_release_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imdb_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imdb_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.genre.genre_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.genre.genre_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.movie_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

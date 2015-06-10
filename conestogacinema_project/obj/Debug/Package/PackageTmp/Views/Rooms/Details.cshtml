@@ -1,0 +1,32 @@
+﻿@model conestogacinema_project.Models.room
+
+@{
+    ViewBag.Title = "Room " + Html.DisplayFor(model => model.room_title);
+}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 title">
+    <div class="row">
+        <h4>@ViewBag.Title</h4>
+    </div>
+</div>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Room Title</dt>
+        <dd>@Html.DisplayFor(model => model.room_title)</dd>
+
+        <dt>Number of Seats</dt>
+        <dd>@Html.DisplayFor(model => model.room_seats)</dd>
+
+        <dt>Screen Projector</dt>
+        <dd>@Html.DisplayFor(model => model.room_projector)</dd>
+
+        <dt>Room Type</dt>
+        <dd>@Html.DisplayFor(model => model.room_types.type_name)</dd>
+    </dl>
+
+    <div class="form-inline">
+        <a class="btn btn-primary btn-outline" href="@Url.Action("Edit", "Rooms", new { id = Model.room_id })">Edit</a>
+        <a class="btn btn-danger btn-outline" href="@Url.Action("Delete", "Rooms", new { id = Model.room_id })">Delete</a>
+    </div>
+</div>
