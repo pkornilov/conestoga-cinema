@@ -1,4 +1,5 @@
-# Conestoga Cinema
+<img src="http://i.imgur.com/7YL9x5N.png" >
+=======
 **Conestoga Cinema** is a conceptual service that unites movie fans from Conestoga College. With it, students can book classrooms equipped with screen projectors and watch movies with their fellows. Conestoga Cinema maintains a library of movies that students can choose from. It keeps getting bigger since users can add any movie they want to watch from IMDb using the app.
 
 Built with
@@ -33,4 +34,4 @@ Screenshots
 ### Rooms List
 <img src="http://i.imgur.com/RG7Gkmm.png" >
 
-(c) Philippe Kornilov, 2015.
+***&copy;*** Philippe Kornilov, 2015.
