@@ -1,2 +1,2 @@
-# conestoga-cinema
-Conestoga Cinema
+# Conestoga Cinema
+conestoga-cinema
