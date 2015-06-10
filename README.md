@@ -1,2 +1,2 @@
 # Conestoga Cinema
-conestoga-cinema
+Conestoga Cinema is a service that unites movie fans from Conestoga College. With it, students can book classrooms equipped with screen projectors. It has a list of Conestoga College rooms that are available for booking. Conestoga Cinema also maintains a library of movies that students can watch with their fellows. The library keeps getting bigger since users can add any movie they want to watch from IMDb using the app. Combining the the two modules (rooms and movies) together, students can host their own showtimes and others may attend them.
