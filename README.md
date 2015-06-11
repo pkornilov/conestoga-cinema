@@ -34,4 +34,4 @@ Screenshots
 ### Rooms List
 <img src="http://i.imgur.com/RG7Gkmm.png" >
 
-***&copy;*** Philippe Kornilov, 2015.
+**&copy;** Philippe Kornilov, 2015.
